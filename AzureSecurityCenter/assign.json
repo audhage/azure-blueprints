@@ -14,10 +14,10 @@
                 "value": "azsec-corporate-rg"
             },
             "ascOwnerEmail": {
-                "value": "YOUR_EMAIL_CONTACT"
+                "value": "andy@azsec.net"
             },
             "ascOwnerContact": {
-                "value": "YOUR_PHONE_NUMBER"
+                "value": "123456"
             },
             "highSeverityAlertNotification": {
                 "value": "On"
