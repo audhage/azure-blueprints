@@ -6,7 +6,7 @@ Before deploying this blueprint you need to install [Az.Blueprint module](https:
 
 To deploy the blueprint, run the following script:
 
-```
+```powershell
 $bluePrintName = "azsec_blueprint"
 $subscriptionId = "YOUR_SUBSCRIPTION"
 
