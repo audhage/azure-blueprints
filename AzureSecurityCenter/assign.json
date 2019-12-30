@@ -1,0 +1,56 @@
+{
+    "identity": {
+        "type": "SystemAssigned"
+    },
+    "location": "westus",
+    "properties": {
+        "blueprintId": "/providers/Microsoft.Blueprint/blueprints/azsec_blueprint",
+        "parameters": {
+            "globalWorkspaceName": {
+                "value": "YOUR_WORKSPACE_NAME"
+            },
+            "globalWorkspaceRgName": {
+                "value": "YOUR_WORKSPACE_RESOURCE_GROUP_NAME"
+            },
+            "ascOwnerEmail": {
+                "value": "YOUR_EMAIL_CONTACT"
+            },
+            "ascOwnerContact": {
+                "value": "YOUR_PHONE_NUMBER"
+            },
+            "highSeverityAlertNotification": {
+                "value": "On"
+            },
+            "subscriptionOwnerNotification": {
+                "value": "On"
+            },
+            "autoProvisionSetting": {
+                "value": "On"
+            },
+            "virtualMachineTier": {
+                "value": "On"
+            },
+            "appServiceTier": {
+                "value": "On"
+            },
+            "paasSQLServiceTier": {
+                "value": "On"
+            },
+            "sqlServerOnVmTier": {
+                "value": "On"
+            },
+            "storageAccountTier": {
+                "value": "On"
+            },
+            "keyvaultTier": {
+                "value": "On"
+            },
+            "kubernetesServiceTier": {
+                "value": "On"
+            },
+            "containerRegistryTier": {
+                "value": "On"
+            }
+        }
+    }
+}
