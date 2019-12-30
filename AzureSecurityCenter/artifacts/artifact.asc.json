@@ -1,18 +1,20 @@
 {
+    "kind": "template",
+    "id": "/providers/Microsoft.Blueprint/blueprints/azsec_blueprint/artifacts/asc_blueprint",
+    "type": "Microsoft.Blueprint/blueprints/artifacts",
+    "name": "asc_blueprint",
+    "displayName": "Azure Security Center template",
+    "description": "A blueprint to deploy Azure Security Center",
     "properties": {
-        "kind": "template",
-        "id": "/providers/Microsoft.Blueprint/blueprints/azsec_blueprint/artifacts/asc_blueprint",
-        "type": "Microsoft.Blueprint/blueprints/artifacts",
-        "name": "asc_blueprint",
         "template": {
             "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
             "parameters": {
                 "globalworkspaceName": {
                     "type": "string",
-                    "defaultValue": "ew-security-workspace",
+                    "defaultValue": "azsec_shared_workspace",
                     "allowedValues": [
-                        "ew-security-workspace"
+                        "azsec_shared_workspace"
                     ],
                     "metadata": {
                         "description": "Name of the central Log Analytics workspace that stores security event and data collected by Azure Security Center"
@@ -20,9 +22,9 @@
                 },
                 "globalworkspaceRgName": {
                     "type": "string",
-                    "defaultValue": "ew-security-services-rg",
+                    "defaultValue": "azsec-corporate-rg",
                     "allowedValues": [
-                        "ew-security-services-rg"
+                        "azsec-corporate-rg"
                     ],
                     "metadata": {
                         "description": "Name of the resource group where the central log analytics workspace belongs to"
@@ -328,8 +330,6 @@
             }
         },
         "dependsOn": [
-        ],
-        "displayName": "Azure Security Center template",
-        "description": ""
+        ]
     }
 }

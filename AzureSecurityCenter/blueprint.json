@@ -11,7 +11,7 @@
                 "type": "string",
                 "defaultValue": "azsec-shared-workspace",
                 "allowedValues": [
-                    "azsec-shared-workspac"
+                    "azsec-shared-workspace"
                 ],
                 "metadata": {
                     "description": "Name of the central Log Analytics workspace that stores security event and data collected by Azure Security Center"
