@@ -33,7 +33,7 @@ $subscriptionId = "YOUR_SUBSCRIPTION"
 $assignmentFilePath = ".\AzureSecurityCenter\assign.json
  
 $ascBlueprint = Get-AzBlueprint -Name $bluePrintName `
-                                -SubscriptionId $
+                                -SubscriptionId $subscriptionId
                                 
 New-AzBlueprintAssignment -Name $blueprintAssignmentName ` 
                           -Blueprint $ascBlueprint `
