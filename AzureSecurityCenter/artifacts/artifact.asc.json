@@ -1,5 +1,9 @@
 {
     "properties": {
+        "kind": "template",
+        "id": "/providers/Microsoft.Blueprint/blueprints/azsec_blueprint/artifacts/asc_blueprint",
+        "type": "Microsoft.Blueprint/blueprints/artifacts",
+        "name": "asc_blueprint",
         "template": {
             "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
@@ -327,9 +331,5 @@
         ],
         "displayName": "Azure Security Center template",
         "description": ""
-    },
-    "kind": "template",
-    "id": "/providers/Microsoft.Blueprint/blueprints/azsec_blueprint/artifacts/asc_blueprint",
-    "type": "Microsoft.Blueprint/blueprints/artifacts",
-    "name": "asc_blueprint"
+    }
 }
