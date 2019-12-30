@@ -3,18 +3,18 @@
     "id": "/providers/Microsoft.Blueprint/blueprints/azsec_blueprint/artifacts/asc_blueprint",
     "type": "Microsoft.Blueprint/blueprints/artifacts",
     "name": "asc_blueprint",
-    "displayName": "Azure Security Center template",
-    "description": "A blueprint to deploy Azure Security Center",
     "properties": {
+        "displayName": "Azure Security Center template",
+        "description": "A blueprint to deploy Azure Security Center",
         "template": {
             "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
             "parameters": {
                 "globalworkspaceName": {
                     "type": "string",
-                    "defaultValue": "azsec_shared_workspace",
+                    "defaultValue": "azsec-shared-workspace",
                     "allowedValues": [
-                        "azsec_shared_workspace"
+                        "azsec-shared-workspace"
                     ],
                     "metadata": {
                         "description": "Name of the central Log Analytics workspace that stores security event and data collected by Azure Security Center"
