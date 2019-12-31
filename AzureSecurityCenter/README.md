@@ -42,4 +42,9 @@ New-AzBlueprintAssignment -Name $blueprintAssignmentName `
                           -Verbose
 ```
 
-
+# References
+There are recommended references to use this blueprint effectively:
+- [Deploy Azure Security Center Blueprint](https://azsec.azurewebsites.net/2019/12/30/deploy-azure-security-center-blueprint/)
+- [Managing Blueprints as Code](https://github.com/Azure/azure-blueprints/blob/master/README.md)
+- [An overview of Azure Blueprints | Azure Friday](https://www.youtube.com/watch?v=cQ9D-d6KkMY)
+- [What is Azure Blueprint](https://docs.microsoft.com/en-us/azure/governance/blueprints/overview)
