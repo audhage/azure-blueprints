@@ -38,7 +38,7 @@ $ascBlueprint = Get-AzBlueprint -Name $bluePrintName `
 New-AzBlueprintAssignment -Name $blueprintAssignmentName ` 
                           -Blueprint $ascBlueprint `
                           -SubscriptionId $ $subscriptionId `
-                          -AssignmentFile $assignmentFilePath 
+                          -AssignmentFile $assignmentFilePath `
                           -Verbose
 ```
 
