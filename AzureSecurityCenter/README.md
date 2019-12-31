@@ -30,7 +30,7 @@ Publish-AzBlueprint -Blueprint $ascBlueprint `
 ```powershell
 $blueprintAssignmentName = "azsec_asc_assignment"
 $subscriptionId = "YOUR_SUBSCRIPTION"
-$assignmentFilePath = ".\AzureSecurityCenter\assign.json
+$assignmentFilePath = ".\AzureSecurityCenter\assign.json"
  
 $ascBlueprint = Get-AzBlueprint -Name $bluePrintName `
                                 -SubscriptionId $subscriptionId
