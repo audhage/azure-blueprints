@@ -24,6 +24,7 @@ $version = "1.0"
 $ascBlueprint = Get-AzBlueprint -Name $bluePrintName `
                                 -SubscriptionId $subscriptionId
 Publish-AzBlueprint -Blueprint $ascBlueprint `
+                    -Version $version
 ```
 # Assignment
 
