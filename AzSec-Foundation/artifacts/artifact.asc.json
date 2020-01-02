@@ -30,6 +30,13 @@
                         "description": "Name of the resource group where the central log analytics workspace belongs to"
                     }
                 },
+                "sharedGlobalWorkspaceSubId": {
+                    "type":"string",
+                    "metadata": {
+                        "displayName": "Shared Global workspace Subscription ID",
+                        "description": "Subscription ID of the Global Workspace"
+                    }
+                },
                 "autoProvisionSetting": {
                     "type": "string",
                     "defaultValue": "On",
@@ -171,7 +178,7 @@
                     "name": "default",
                     "properties": {
                         "scope": "[subscription().id]",
-                        "workspaceId": "[concat(subscription().id,'/resourceGroups/',parameters('globalworkspaceRgName'),'/providers/Microsoft.OperationalInsights/workspaces/',parameters('globalworkspaceName'))]"
+                        "workspaceId": "[concat('/subscriptions/', parameters('sharedGlobalWorkspaceSubId'), '/resourceGroups/',parameters('globalworkspaceRgName'),'/providers/Microsoft.OperationalInsights/workspaces/',parameters('globalworkspaceName'))]"
                     }
                 },
                 {
@@ -288,6 +295,9 @@
             },
             "globalWorkspaceRgName": {
                 "value": "[parameters('sharedGlobalWorkspaceRgName')]"
+            },
+            "sharedGlobalWorkspaceSubId" :{
+                "value": "[parameters('g_sharedGlobalWorkspaceSubId')]"
             },
             "ascOwnerEmail": {
                 "value": "[parameters('ascOwnerEmail')]"

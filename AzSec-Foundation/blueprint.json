@@ -89,6 +89,13 @@
                     "description": "Name of the resource group where the central log analytics workspace belongs to"
                 }
             },
+            "g_sharedGlobalWorkspaceSubId": {
+                "type":"string",
+                "metadata": {
+                    "displayName": "Shared Global workspace Subscription ID",
+                    "description": "Subscription ID of the Global Workspace"
+                }
+            },
             "autoProvisionSetting": {
                 "type": "string",
                 "defaultValue": "On",
