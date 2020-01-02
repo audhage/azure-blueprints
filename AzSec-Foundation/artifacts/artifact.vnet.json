@@ -113,17 +113,17 @@
                     {
                         "name": "[concat(parameters('projectCode'), '-', parameters('projectStage'), '-dev-subnet')]",
                         "addressPrefix": "[parameters('devSubnetAddressPrefix')]",
-                        "networkSecurityGroupName": "[concat(variables('subnets')[0].name)),'-nsg')]"
+                        "networkSecurityGroupName": "[concat(variables('subnets')[0].name),'-nsg')]"
                     },
                     {
                         "name": "[concat(parameters('projectCode'), '-', parameters('projectStage'), '-dmz-subnet')]",
                         "addressPrefix": "[parameters('dmzSubnetAddressPrefix')]",
-                        "networkSecurityGroupName": "[concat(variables('subnets')[1].name)),'-nsg')]"
+                        "networkSecurityGroupName": "[concat(variables('subnets')[1].name),'-nsg')]"
                     },
                     {
                         "name": "[concat(parameters('projectCode'), '-', parameters('projectStage'), '-appgateway-subnet')]",
                         "addressPrefix": "[parameters('appGatewaySubnetPrefix')]",
-                        "networkSecurityGroupName": "[concat(variables('subnets')[2].name)),'-nsg')]"
+                        "networkSecurityGroupName": "[concat(variables('subnets')[2].name),'-nsg')]"
                     },
                     {
                         "name": "GatewaySubnet",
