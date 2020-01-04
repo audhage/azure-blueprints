@@ -1,0 +1,1 @@
+# Sample boilerplate template for Azure Blueprint to work with Az.Blueprint module
