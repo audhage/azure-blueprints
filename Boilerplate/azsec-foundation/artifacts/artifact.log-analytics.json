@@ -1,8 +1,8 @@
 {
     "kind": "template",
-    "id": "/providers/Microsoft.Blueprint/blueprints/azsec_foundation/artifacts/asc_blueprint",
+    "id": "/providers/Microsoft.Blueprint/blueprints/azsec_foundation/artifacts/loganalytics_blueprint",
     "type": "Microsoft.Blueprint/blueprints/artifacts",
-    "name": "asc_blueprint",
+    "name": "loganalytics_blueprint",
     "properties": {
         "resourceGroup": "projectResourceGroup",
         "displayName": "Log Analytics template",
