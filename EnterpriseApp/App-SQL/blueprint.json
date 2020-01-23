@@ -167,19 +167,47 @@
                     "description": "Enable or disable TDE feature"
                 }
             },
-            "g_storageAccountName": {
-                "type": "string",
-                "metadata": {
-                    "displayName": "Storage Account for Azure SQL Audit Log",
-                    "description": "Select storage account that is used for storing audit log of ATP"
-                }
-            },
             "g_atpLogRetentionDay": {
                 "type": "int",
                 "defaultValue": 30,
                 "metadata": {
                     "displayName": "Advanced Threat Protection Log Retention In Day",
                     "description": "Specify log retention date"
+                }
+            },
+            "g_storageAccountSku": {
+                "type": "string",
+                "defaultValue": "Standard_LRS",
+                "allowedValues": [
+                    "Standard_LRS",
+                    "Standard_GRS",
+                    "Standard_RAGRS",
+                    "Standard_ZRS",
+                    "Premium_LRS",
+                    "Premium_ZRS",
+                    "Standard_GZRS",
+                    "Standard_RAGZRS"
+                ],
+                "metadata": {
+                    "description": "Storage Account type. Each type support different replication"
+                }
+            },
+            "g_storageAccountType": {
+                "type": "string",
+                "defaultValue": "StorageV2",
+                "metadata": {
+                    "description": "Storage account type. V2 is always recommended"
+                }
+            },
+            "g_advancedThreatProtectionEnabled": {
+                "type": "bool",
+                "defaultValue": true,
+                "allowedValues": [
+                    true,
+                    false
+                ],
+                "metadata": {
+                    "description": "Enable or disable Advanced Threat Protection."
                 }
             }
         },
