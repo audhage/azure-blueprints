@@ -119,7 +119,6 @@
                 },
                 "emailAddress": {
                     "type": "array",
-                    "defaultValue": "thuan@outlook.com",
                     "metadata": {
                         "description": "Email for Threat Detection"
                     }
@@ -146,12 +145,6 @@
                         "description": "Enable or disable TDE feature"
                     }
                 },
-                "storageAccountName": {
-                    "type": "string",
-                    "metadata": {
-                        "description": "Select storage account that is used for storing audit log of ATP"
-                    }
-                },
                 "atpLogRetentionDay": {
                     "type": "int",
                     "defaultValue": 30,
@@ -165,12 +158,12 @@
                     "ProjectCode": "[parameters('projectCode')]",
                     "Environemnt": "[parameters('projectStage')]"
                 },
+                "storageAccountName": "[concat('sqlaudit', uniquestring(resourceGroup().id))]",
                 "hostPlaningName": "[concat(parameters('projectCode'), '-',parameters('projectStage'), '-', parameters('location'))]",
                 "websiteName": "[concat(parameters('projectCode'),'-',parameters('websiteName'), '-', parameters('projectStage'), '-',parameters('location'))]",
                 "sqlServerName": "[concat(parameters('projectCode'),'-','sqlsrv-',parameters('projectStage'),'-',parameters('location'))]",
-                "dbName": "[concat(parameters('projectCode'),'-',parameters('projectStage'), '-', parameters('websiteName'), '-', 'db','-',uniqueString(resourceGroup().id))]",
-                "storageEndpoint": "[concat(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')))]"
-
+                "dbName": "[concat(parameters('projectCode'),'-',parameters('projectStage'), '-', parameters('websiteName'), '-', 'db')]",
+                "storageEndpoint": "[concat(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')))]"
             },
             "resources": [
                 {
@@ -196,7 +189,7 @@
                             "properties": {
                                 "state": "Enabled",
                                 "emailAccountAdmins": true,
-                                "emailAddresses": ["[parameters('emailAddress')]"],
+                                "emailAddresses": "[parameters('emailAddress')]",
                                 "storageEndpoint": "[reference(variables('storageEndpoint'), '2018-03-01-preview').PrimaryEndpoints.Blob]",
                                 "storageAccountAccessKey": "[listKeys(variables('storageEndpoint'), '2018-03-01-preview').keys[0].value]",
                                 "retentionDays": "[parameters('atpLogRetentionDay')]"
@@ -257,30 +250,27 @@
                         "[variables('hostPlaningName')]"
                     ],
                     "tags": "[union(parameters('resourceTags'),variables('customTag'))]",
+                    "kind": "app",
                     "properties": {
                         "name": "[variables('websiteName')]",
-                        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostPlaningName'))]"
-                    },
-                    "resources": [
-                        {
-                            "apiVersion": "2018-02-01",
-                            "type": "config",
-                            "name": "connectionstrings",
-                            "dependsOn": [
-                                "[concat('Microsoft.Sql/servers/', variables('sqlServerName'))]",
-                                "[variables('websiteName')]"
-                            ],
-                            "properties": {
-                                "minTlsVersion": "1.2",
-                                "ftpsState": "FtpsOnly",
-                                "connectionStrings": {
-                                    "name": "myDb",
-                                    "type": "SQLAzure",
-                                    "connectionString": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('dbName'), ';User Id=', parameters('sqlAdminUser'), '@', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ';Password=', parameters('sqlAdminPassword'), ';')]"
+                        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostPlaningName'))]",
+                        "enabled": true,
+                        "siteConfig": {
+                            "ftpsState": "FtpsOnly",
+                            "minTlsVersion": "1.2",
+                            "httpLoggingEnabled":true,
+                            "netFrameworkVersion": "v4.7",
+                            "phpVersion": "7.3",
+                            "pythonVersion": "3.6",
+                            "connectionStrings": [
+                                {
+                                    "name": "defaultConn",
+                                    "connectionString": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('dbName'), ';User Id=', parameters('sqlAdminUser'), '@', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ';Password=', parameters('sqlAdminPassword'), ';')]",
+                                    "type": "SQLAzure"
                                 }
-                            }
+                            ]
                         }
-                    ]
+                    }
                 }
             ],
             "outputs": {}
@@ -325,13 +315,12 @@
             "transparentDataEncryption": {
                 "value": "[parameters('g_transparentDataEncryption')]"
             },
-            "storageAccountName": {
-                "value": "[parameters('g_storageAccountName')]"
-            },
             "atpLogRetentionDay": {
                 "value": "[parameters('g_atpLogRetentionDay')]"
             }
         },
-        "dependsOn": []
+        "dependsOn": [
+            "artifact.storage"
+        ]
     }
 }
