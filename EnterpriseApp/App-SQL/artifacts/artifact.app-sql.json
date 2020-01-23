@@ -168,7 +168,9 @@
                 "hostPlaningName": "[concat(parameters('projectCode'), '-',parameters('projectStage'), '-', parameters('location'))]",
                 "websiteName": "[concat(parameters('projectCode'),'-',parameters('websiteName'), '-', parameters('projectStage'), '-',parameters('location'))]",
                 "sqlServerName": "[concat(parameters('projectCode'),'-','sqlsrv-',parameters('projectStage'),'-',parameters('location'))]",
-                "dbName": "[concat(parameters('projectCode'),'-',parameters('projectStage'), parameters('websiteName'), '-', 'db','-',uniqueString(resourceGroup().id))]"
+                "dbName": "[concat(parameters('projectCode'),'-',parameters('projectStage'), '-', parameters('websiteName'), '-', 'db','-',uniqueString(resourceGroup().id))]",
+                "storageEndpoint": "[concat(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')))]"
+
             },
             "resources": [
                 {
@@ -195,8 +197,8 @@
                                 "state": "Enabled",
                                 "emailAccountAdmins": true,
                                 "emailAddresses": ["[parameters('emailAddress')]"],
-                                "storageEndpoint": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2018-03-01-preview').PrimaryEndpoints.Blob]",
-                                "storageAccountAccessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2018-03-01-preview').keys[0].value]",
+                                "storageEndpoint": "[reference(variables('storageEndpoint'), '2018-03-01-preview').PrimaryEndpoints.Blob]",
+                                "storageAccountAccessKey": "[listKeys(variables('storageEndpoint'), '2018-03-01-preview').keys[0].value]",
                                 "retentionDays": "[parameters('atpLogRetentionDay')]"
                             }
                         }
