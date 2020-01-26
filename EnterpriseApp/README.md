@@ -1,0 +1,1 @@
+# A blueprint to deploy an enterprise app hosted on Azure PaaS service

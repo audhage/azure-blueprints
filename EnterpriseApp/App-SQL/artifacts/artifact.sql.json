@@ -1,12 +1,12 @@
 {
     "kind": "template",
-    "id": "/providers/Microsoft.Blueprint/blueprints/app_blueprint/artifacts/app_sql_blueprint",
+    "id": "/providers/Microsoft.Blueprint/blueprints/app_blueprint/artifacts/sql_blueprint",
     "type": "Microsoft.Blueprint/blueprints/artifacts",
-    "name": "app_sql_blueprint",
+    "name": "sql_blueprint",
     "properties": {
         "resourceGroup": "projectResourceGroup",
-        "displayName": "Azure App and Azure SQL service template",
-        "description": "A blueprint to deploy Azure App with managed Azure SQL",
+        "displayName": "Azure SQL service template",
+        "description": "An artifact to deploy managed Azure SQL service",
         "template": {
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
@@ -52,35 +52,10 @@
                         "displayName": "Location for all resources."
                     }
                 },
-                "websiteName": {
+                "appName": {
                     "type": "string",
                     "metadata": {
                         "description": "The name of your Web App"
-                    }
-                },
-                "appServiceSkuName": {
-                    "type": "string",
-                    "allowedValues": [
-                        "B1",
-                        "B2",
-                        "B3",
-                        "S1",
-                        "S2",
-                        "S3",
-                        "P1V2",
-                        "P2v2",
-                        "P3v2"
-                    ],
-                    "metadata": {
-                        "description": "Select an App Service Plan. Note that all B (Basic) plan doesn't support Daily Backup"
-                    }
-                },
-                "appServiceSkuCapacity": {
-                    "type": "int",
-                    "minValue": 1,
-                    "maxValue": 10,
-                    "metadata": {
-                        "description": "Specify number of instance. Different App Service Plan have different support limit."
                     }
                 },
                 "dbSkuType": {
@@ -159,10 +134,8 @@
                     "Environemnt": "[parameters('projectStage')]"
                 },
                 "storageAccountName": "[concat('sqlaudit', uniquestring(resourceGroup().id))]",
-                "hostPlaningName": "[concat(parameters('projectCode'), '-',parameters('projectStage'), '-', parameters('location'))]",
-                "websiteName": "[concat(parameters('projectCode'),'-',parameters('websiteName'), '-', parameters('projectStage'), '-',parameters('location'))]",
                 "sqlServerName": "[concat(parameters('projectCode'),'-','sqlsrv-',parameters('projectStage'),'-',parameters('location'))]",
-                "dbName": "[concat(parameters('projectCode'),'-',parameters('projectStage'), '-', parameters('websiteName'), '-', 'db')]",
+                "dbName": "[concat(parameters('projectCode'),'-',parameters('projectStage'), '-', parameters('appName'), '-', 'db')]",
                 "storageEndpoint": "[concat(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')))]"
             },
             "resources": [
@@ -224,53 +197,6 @@
                             }
                         }
                     ]
-                },
-                {
-                    "name": "[variables('hostPlaningName')]",
-                    "type": "Microsoft.Web/serverfarms",
-                    "apiVersion": "2018-02-01",
-                    "location": "[parameters('location')]",
-                    "tags": "[union(parameters('resourceTags'),variables('customTag'))]",
-                    "sku": {
-                        "name": "[parameters('appServiceSkuName')]",
-                        "capacity": "[parameters('appServiceSkuCapacity')]"
-                    },
-                    "properties": {
-                        "name": "[variables('hostPlaningName')]"
-                    }
-                },
-                {
-                    "name": "[variables('websiteName')]",
-                    "type": "Microsoft.Web/sites",
-                    "apiVersion": "2018-11-01",
-                    "location": "[parameters('location')]",
-                    "dependsOn": [
-                        "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]",
-                        "[concat('Microsoft.Sql/servers/', variables('sqlServerName'), '/', 'databases', '/', variables('dbName'))]",
-                        "[variables('hostPlaningName')]"
-                    ],
-                    "tags": "[union(parameters('resourceTags'),variables('customTag'))]",
-                    "kind": "app",
-                    "properties": {
-                        "name": "[variables('websiteName')]",
-                        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostPlaningName'))]",
-                        "enabled": true,
-                        "siteConfig": {
-                            "ftpsState": "FtpsOnly",
-                            "minTlsVersion": "1.2",
-                            "httpLoggingEnabled":true,
-                            "netFrameworkVersion": "v4.7",
-                            "phpVersion": "7.3",
-                            "pythonVersion": "3.6",
-                            "connectionStrings": [
-                                {
-                                    "name": "defaultConn",
-                                    "connectionString": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('dbName'), ';User Id=', parameters('sqlAdminUser'), '@', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ';Password=', parameters('sqlAdminPassword'), ';')]",
-                                    "type": "SQLAzure"
-                                }
-                            ]
-                        }
-                    }
                 }
             ],
             "outputs": {}
@@ -285,14 +211,8 @@
             "projectStage": {
                 "value": "[parameters('g_projectStage')]"
             },
-            "websiteName": {
-                "value": "[parameters('g_websiteName')]"
-            },
-            "appServiceSkuName": {
-                "value": "[parameters('g_appServiceSkuName')]"
-            },
-            "appServiceSkuCapacity": {
-                "value": "[parameters('g_appServiceSkuCapacity')]"
+            "appName": {
+                "value": "[parameters('g_appName')]"
             },
             "dbSkuType": {
                 "value": "[parameters('g_dbSkuType')]"

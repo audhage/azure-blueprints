@@ -6,7 +6,7 @@
     "properties": {
         "resourceGroup": "projectResourceGroup",
         "displayName": "Storage Account template",
-        "description": "A blueprint to deploy a Storage Account",
+        "description": "An artifact to deploy a Storage Account",
         "template": {
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
