@@ -97,7 +97,9 @@
                 "storageEndpoint": "[concat(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')))]",
                 "redisCacheName": "[concat(parameters('projectCode'),'-','redis', '-', parameters('appName'), '-', parameters('projectStage'), '-',parameters('location'))]",
                 "projectRg": "[concat(parameters('projectCode'), '-', parameters('projectStage'), '-rg')]",
+                "sqlserverResourceId": "[concat(resourceId(variables('projectRg'), 'Microsoft.Sql/servers/', variables('sqlServerName')))]",
                 "redisCacheNameResourceId": "[concat(resourceId(variables('projectRg'), 'Microsoft.Cache/Redis/', variables('redisCacheName')))]"
+
             },
             "resources": [
                 {
@@ -120,8 +122,6 @@
                     "apiVersion": "2018-11-01",
                     "location": "[parameters('location')]",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]",
-                        "[concat('Microsoft.Sql/servers/', variables('sqlServerName'), '/', 'databases', '/', variables('dbName'))]",
                         "[variables('hostPlaningName')]"
                     ],
                     "tags": "[union(parameters('resourceTags'),variables('customTag'))]",
@@ -140,7 +140,7 @@
                             "connectionStrings": [
                                 {
                                     "name": "defaultConn",
-                                    "connectionString": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('dbName'), ';User Id=', parameters('sqlAdminUser'), '@', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ';Password=', parameters('sqlAdminPassword'), ';')]",
+                                    "connectionString": "[concat('Data Source=tcp:', reference(variables('sqlserverResourceId'),'2018-06-01-preview')).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('dbName'), ';User Id=', parameters('sqlAdminUser'), '@', reference(variables('sqlserverResourceId'),'2018-06-01-preview')).fullyQualifiedDomainName, ';Password=', parameters('sqlAdminPassword'), ';')]",
                                     "type": "SQLAzure"
                                 }
                             ],
