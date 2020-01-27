@@ -140,7 +140,7 @@
                             "connectionStrings": [
                                 {
                                     "name": "defaultConn",
-                                    "connectionString": "[concat('Data Source=tcp:', reference(variables('sqlserverResourceId'),'2018-06-01-preview')).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('dbName'), ';User Id=', parameters('sqlAdminUser'), '@', reference(variables('sqlserverResourceId'),'2018-06-01-preview')).fullyQualifiedDomainName, ';Password=', parameters('sqlAdminPassword'), ';')]",
+                                    "connectionString": "[concat('Data Source=tcp:', reference(variables('sqlserverResourceId'),'2018-06-01-preview').fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('dbName'), ';User Id=', parameters('sqlAdminUser'), '@', reference(variables('sqlserverResourceId'),'2018-06-01-preview').fullyQualifiedDomainName, ';Password=', parameters('sqlAdminPassword'), ';')]",
                                     "type": "SQLAzure"
                                 }
                             ],
