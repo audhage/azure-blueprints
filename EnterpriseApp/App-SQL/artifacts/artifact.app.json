@@ -82,6 +82,18 @@
                     "metadata": {
                         "description": "Specify number of instance. Different App Service Plan have different support limit."
                     }
+                },
+                "sqlAdminUser": {
+                    "type": "string",
+                    "metadata": {
+                        "description": "The administrator username of the managed SQL logical server"
+                    }
+                },
+                "sqlAdminPassword": {
+                    "type": "string",
+                    "metadata": {
+                        "description": "The administrator's password of the managed SQL logical server"
+                    }
                 }
             },
             "variables": {
@@ -169,6 +181,12 @@
             },
             "appServiceSkuCapacity": {
                 "value": "[parameters('g_appServiceSkuCapacity')]"
+            },
+            "sqlAdminUser": {
+                "value": "[parameters('g_sqlAdminUser')]"
+            },
+            "sqlAdminPassword": {
+                "value": "[parameters('g_sqlAdminPassword')]"
             }
         },
         "dependsOn": [
