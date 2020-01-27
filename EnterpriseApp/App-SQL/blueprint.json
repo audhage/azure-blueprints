@@ -257,7 +257,55 @@
                     "displayName": "SSL Enforcement",
                     "description": "Enforce SSL for Redis Cache"
                 }
-           }
+            },
+            "g_redisCacheSku": {
+                "type": "string",
+                "allowedValues": [
+                    "Basic",
+                    "Standard",
+                    "Premium"
+                ],
+                "metadata": {
+                    "displayName": "Azure Redis Cache SKU",
+                    "description": "Specify SKU for Azure Redis Cache"
+                }
+            },
+            "g_redisCacheFamily": {
+                "type": "string",
+                "allowedValues": [
+                    "C",
+                    "P"
+                ],
+                "metadata": {
+                    "displayName": "Redis Cache Family"
+                }
+            },
+            "g_redisCacheCapacity": {
+                "type": "int",
+                "allowedValues": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "metadata": {
+                    "displayName": "Redis Cache Capacity",
+                    "description": "Specify Redis Cache capacity"
+                }
+            },
+            "g_enableNonSslPort": {
+                "type": "bool",
+                "allowedValues": [
+                    false
+                ],
+                "metadata": {
+                    "displayName": "SSL Enforcement",
+                    "description": "Enforce SSL for Redis Cache"
+                }
+            }
         },
         "resourceGroups": {
             "projectResourceGroup": {
