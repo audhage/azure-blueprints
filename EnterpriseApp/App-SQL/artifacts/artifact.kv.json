@@ -92,7 +92,7 @@
                     "Environemnt": "[parameters('projectStage')]"
                 },
                 "projectRg": "[concat(parameters('projectCode'), '-', parameters('projectStage'), '-rg')]",
-                "projectWorkspaceName": "[concat(parameters('projectCode'), '-', parameters('projectStage'), '-workspace')]",
+                "projectWorkspaceId":"[concat(resourceId(variables('projectRg'), 'Microsoft.OperationalInsights/workspaces/', variables('projectWorkspaceName')))]",
                 "keyVaultName": "[concat(parameters('projectCode'), '-', parameters('projectStage'), '-kv')]",
                 "enableVaultForDeployment": true,
                 "enableVaultForDiskEncryption": true,
@@ -160,7 +160,7 @@
                         "[concat('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]"
                     ],
                     "properties": {
-                        "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces/', variables('projectWorkspaceName'))]",
+                        "workspaceId": "[reference(variables('projectWorkspaceId'), '2015-11-01-preview').customerId]",
                         "logs": [
                             {
                                 "category": "AuditEvent",
