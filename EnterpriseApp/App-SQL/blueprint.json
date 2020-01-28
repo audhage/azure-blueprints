@@ -305,6 +305,33 @@
                     "displayName": "SSL Enforcement",
                     "description": "Enforce SSL for Redis Cache"
                 }
+            },
+            "g_keyVaultSku": {
+                "type": "string",
+                "allowedValues": [
+                    "Standard",
+                    "Premium"
+                ],
+                "metadata": {
+                    "displayName": "Key Vault SKU",
+                    "description": "Select SKU for Key Vault - Standard or Premium"
+                }
+            },
+            "g_adminObjectId": {
+                "type": "string",
+                "metadata": {
+                    "displayName": "Key Vault Admin Object ID",
+                    "description": "AAD Object ID of the user that requires access to Key Vault."
+                }
+            },
+            "g_logRetentionInDays": {
+                "type": "int",
+                "minValue": 30,
+                "maxValue": 365,
+                "metadata": {
+                    "displayName": "Log rention in days",
+                    "description": "Specify number of days logs will be kept"
+                }
             }
         },
         "resourceGroups": {
