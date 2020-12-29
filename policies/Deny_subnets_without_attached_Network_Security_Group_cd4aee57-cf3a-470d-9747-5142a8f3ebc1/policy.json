@@ -1,0 +1,34 @@
+{
+ "properties": {
+  "displayName": "Deny subnets without attached Network Security Group",
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+   "createdBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "createdOn": "2020-05-18T06:29:14.9776221Z",
+   "updatedBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "updatedOn": "2020-05-20T13:22:58.3717771Z"
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Network/virtualNetworks/subnets"
+     },
+     {
+      "field": "Microsoft.Network/virtualNetworks/subnets/networkSecurityGroup.id",
+      "exists": "false"
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/a8540d17-6c4e-41da-841c-206321705e1e/providers/Microsoft.Authorization/policyDefinitions/cd4aee57-cf3a-470d-9747-5142a8f3ebc1",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "cd4aee57-cf3a-470d-9747-5142a8f3ebc1"
+}

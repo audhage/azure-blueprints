@@ -1,0 +1,45 @@
+{
+ "properties": {
+  "displayName": "test-append-nsg-rule",
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+   "category": "Network",
+   "createdBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "createdOn": "2020-08-28T22:37:32.1182123Z",
+   "updatedBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "updatedOn": "2020-08-28T23:11:47.8504364Z"
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Network/networkSecurityGroups/securityRules"
+     },
+     {
+      "field": "Microsoft.Network/networkSecurityGroups/securityRules/priority",
+      "equals": 103
+     },
+     {
+      "field": "Microsoft.Network/networkSecurityGroups/securityRules/direction",
+      "equals": "Inbound"
+     }
+    ]
+   },
+   "then": {
+    "effect": "append",
+    "details": [
+     {
+      "field": "Microsoft.Network/networkSecurityGroups/securityRules/protocol",
+      "value": "Tcp"
+     }
+    ]
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/48d6938b-833e-40c4-875b-74df2d1086a1/providers/Microsoft.Authorization/policyDefinitions/992ff46a-6bed-4edc-b89e-6bddd6c2bd5f",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "992ff46a-6bed-4edc-b89e-6bddd6c2bd5f"
+}

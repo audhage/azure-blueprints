@@ -1,0 +1,55 @@
+{
+ "properties": {
+  "displayName": "Custom - Internet-facing virtual machines should be protected with network security groups",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Protect your virtual machines from potential threats by restricting access to them with network security groups (NSG). Learn more about controlling traffic with NSGs at https://aka.ms/nsg-doc",
+  "metadata": {
+   "category": "Security Center",
+   "createdBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "createdOn": "2020-12-16T20:04:49.5106817Z",
+   "updatedBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "updatedOn": "2020-12-16T20:05:49.9330437Z"
+  },
+  "parameters": {
+   "effect": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Effect",
+     "description": "Enable or disable the execution of the policy"
+    },
+    "allowedValues": [
+     "AuditIfNotExists",
+     "Disabled"
+    ],
+    "defaultValue": "AuditIfNotExists"
+   }
+  },
+  "policyRule": {
+   "if": {
+    "field": "type",
+    "in": [
+     "Microsoft.Compute/virtualMachines",
+     "Microsoft.ClassicCompute/virtualMachines"
+    ]
+   },
+   "then": {
+    "effect": "[parameters('effect')]",
+    "details": {
+     "type": "Microsoft.Security/assessments",
+     "name": "483f12ed-ae23-447e-a2de-a67a10db4353",
+     "existenceCondition": {
+      "field": "Microsoft.Security/assessments/status.code",
+      "in": [
+       "Healthy",
+       "NotApplicable"
+      ]
+     }
+    }
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/48d6938b-833e-40c4-875b-74df2d1086a1/providers/Microsoft.Authorization/policyDefinitions/92d33a31-08b3-44c0-9c1c-1378d8f41158",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "92d33a31-08b3-44c0-9c1c-1378d8f41158"
+}

@@ -1,0 +1,54 @@
+name: manage-azure-policy-c7a8eef3
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'initiatives/_Preview_NIST_SP_800-171_R2_03055927-78bd-4236-86c0-f36125a10dc9/**'
+#      - 'policies/Test-nsg-append_3d3130a7-2209-4b44-b3a4-690041a65cc6/**'
+#      - 'policies/Deploy_NetworkWatcherAgentWindows_extension_for_Windows_Server_5184fa48-3efc-4fdc-9d60-1e2fc4d66643/**'
+#      - 'policies/Deploy_Microsoft_Monitoring_Agent_auto_enrollment_to_subscription_564d4d05-f0f5-4713-8f9d-b89131e5c8ec/**'
+#      - 'policies/Custom_-_Internet-facing_virtual_machines_should_be_protected_with_network_security_groups_92d33a31-08b3-44c0-9c1c-1378d8f41158/**'
+#      - 'policies/test-append-nsg-rule_992ff46a-6bed-4edc-b89e-6bddd6c2bd5f/**'
+#      - 'policies/Create_and_attach_Network_Security_Group_for_all_subnets_6d5d4541-ceb0-400c-a06a-26b35cd1608b/**'
+#      - 'policies/Deploy_Diagnostic_Settings_for_Activity_Log_c6038c92-4421-47f7-b287-e541c6044e8f/**'
+#      - 'policies/Deploy_Microsoft_Monitoring_Agent_auto_enrollment_to_subscription2_140310be-17e0-4b6b-b324-9a0f4d5f1d7d/**'
+#      - 'policies/Deny_subnets_without_attached_Network_Security_Group_cd4aee57-cf3a-470d-9747-5142a8f3ebc1/**'
+#      - 'policies/Deploy_Diagnostic_Settings_for_Network_Security_Groups_d72d9dcd-d2ca-4cd4-beb7-91a948863bb0/**'
+#      - 'policies/Deny_Allow-All_inbound_Network_Security_Group_rules_de918e19-4bcf-49f1-87e8-29094f78cd4b/**'
+#      - .github/workflows/manage-azure-policy-c7a8eef3.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_c7a8eef3}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          initiatives/_Preview_NIST_SP_800-171_R2_03055927-78bd-4236-86c0-f36125a10dc9/**
+          policies/Test-nsg-append_3d3130a7-2209-4b44-b3a4-690041a65cc6/**
+          policies/Deploy_NetworkWatcherAgentWindows_extension_for_Windows_Server_5184fa48-3efc-4fdc-9d60-1e2fc4d66643/**
+          policies/Deploy_Microsoft_Monitoring_Agent_auto_enrollment_to_subscription_564d4d05-f0f5-4713-8f9d-b89131e5c8ec/**
+          policies/Custom_-_Internet-facing_virtual_machines_should_be_protected_with_network_security_groups_92d33a31-08b3-44c0-9c1c-1378d8f41158/**
+          policies/test-append-nsg-rule_992ff46a-6bed-4edc-b89e-6bddd6c2bd5f/**
+          policies/Create_and_attach_Network_Security_Group_for_all_subnets_6d5d4541-ceb0-400c-a06a-26b35cd1608b/**
+          policies/Deploy_Diagnostic_Settings_for_Activity_Log_c6038c92-4421-47f7-b287-e541c6044e8f/**
+          policies/Deploy_Microsoft_Monitoring_Agent_auto_enrollment_to_subscription2_140310be-17e0-4b6b-b324-9a0f4d5f1d7d/**
+          policies/Deny_subnets_without_attached_Network_Security_Group_cd4aee57-cf3a-470d-9747-5142a8f3ebc1/**
+          policies/Deploy_Diagnostic_Settings_for_Network_Security_Groups_d72d9dcd-d2ca-4cd4-beb7-91a948863bb0/**
+          policies/Deny_Allow-All_inbound_Network_Security_Group_rules_de918e19-4bcf-49f1-87e8-29094f78cd4b/**

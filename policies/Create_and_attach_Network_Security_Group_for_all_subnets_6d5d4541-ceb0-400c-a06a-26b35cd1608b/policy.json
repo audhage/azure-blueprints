@@ -1,0 +1,102 @@
+{
+ "properties": {
+  "displayName": "Create and attach Network Security Group for all subnets",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "This policy ensures that all subnets have Network Security Groups attached.",
+  "metadata": {
+   "category": "Network",
+   "createdBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "createdOn": "2020-05-16T10:00:38.1193449Z",
+   "updatedBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "updatedOn": "2020-05-17T16:41:19.2723324Z"
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Network/virtualNetworks/subnets"
+     }
+    ]
+   },
+   "then": {
+    "effect": "deployIfNotExists",
+    "details": {
+     "roleDefinitionIds": [
+      "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+     ],
+     "type": "Microsoft.Network/networkSecurityGroups",
+     "name": "[concat(replace(field('fullName'), '/', '-'), '-nsg')]",
+     "deployment": {
+      "properties": {
+       "mode": "incremental",
+       "template": {
+        "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+        "contentVersion": "1.0.0.0",
+        "parameters": {
+         "fullName": {
+          "type": "string"
+         }
+        },
+        "variables": {
+         "nsgName": "[concat(replace(parameters('fullName'), '/', '-'), '-nsg')]",
+         "vnetName": "[split(parameters('fullName'), '/')[0]]",
+         "subnetName": "[split(parameters('fullName'), '/')[1]]"
+        },
+        "resources": [
+         {
+          "type": "Microsoft.Network/networkSecurityGroups",
+          "apiVersion": "2019-11-01",
+          "name": "[variables('nsgName')]",
+          "location": "[resourceGroup().location]",
+          "properties": {}
+         },
+         {
+          "apiVersion": "2019-05-01",
+          "name": "apply-nsg-to-subnet",
+          "type": "Microsoft.Resources/deployments",
+          "resourceGroup": "[resourceGroup().name]",
+          "dependsOn": [
+           "[variables('nsgName')]"
+          ],
+          "properties": {
+           "mode": "Incremental",
+           "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "resources": [
+             {
+              "apiVersion": "2019-12-01",
+              "type": "Microsoft.Network/virtualNetworks/subnets",
+              "name": "[parameters('fullName')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+               "addressPrefix": "[reference(resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetName')), '2018-03-01').addressPrefix]",
+               "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+               }
+              }
+             }
+            ]
+           }
+          }
+         }
+        ]
+       },
+       "parameters": {
+        "fullName": {
+         "value": "[field('fullName')]"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "id": "/subscriptions/d4c66b49-34c5-47af-978e-90d27703c277/providers/Microsoft.Authorization/policyDefinitions/6d5d4541-ceb0-400c-a06a-26b35cd1608b",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "6d5d4541-ceb0-400c-a06a-26b35cd1608b"
+}

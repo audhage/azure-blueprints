@@ -1,0 +1,133 @@
+{
+ "properties": {
+  "displayName": "Deploy Diagnostic Settings for Activity Log",
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+   "createdBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "createdOn": "2020-06-08T12:18:40.3141783Z",
+   "updatedBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "updatedOn": "2020-06-12T21:32:32.1743205Z"
+  },
+  "parameters": {
+   "settingName": {
+    "type": "String",
+    "defaultValue": "log-to-g-sharedservices-log"
+   },
+   "workspaceId": {
+    "type": "String",
+    "defaultValue": "/subscriptions/d4c66b49-34c5-47af-978e-90d27703c277/resourcegroups/law/providers/microsoft.operationalinsights/workspaces/law-law"
+   }
+  },
+  "policyRule": {
+   "if": {
+    "field": "type",
+    "equals": "Microsoft.Resources/subscriptions"
+   },
+   "then": {
+    "effect": "deployIfNotExists",
+    "details": {
+     "type": "Microsoft.Insights/diagnosticSettings",
+     "deploymentScope": "Subscription",
+     "existenceScope": "Subscription",
+     "existenceCondition": {
+      "allOf": [
+       {
+        "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+        "equals": "true"
+       },
+       {
+        "field": "Microsoft.Insights/diagnosticSettings/workspaceId",
+        "equals": "[parameters('workspaceId')]"
+       }
+      ]
+     },
+     "roleDefinitionIds": [
+      "/providers/microsoft.authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+     ],
+     "deployment": {
+      "location": "westeurope",
+      "properties": {
+       "mode": "incremental",
+       "parameters": {
+        "settingName": {
+         "value": "[parameters('settingName')]"
+        },
+        "workspaceId": {
+         "value": "[parameters('workspaceId')]"
+        }
+       },
+       "template": {
+        "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+        "contentVersion": "1.0.0.0",
+        "parameters": {
+         "settingName": {
+          "type": "string",
+          "metadata": {
+           "description": "The name of the diagnostic setting"
+          }
+         },
+         "workspaceId": {
+          "type": "string",
+          "metadata": {
+           "description": "ResourceID of the Log Analytics workspace in which resource logs should be saved."
+          }
+         }
+        },
+        "variables": {},
+        "resources": [
+         {
+          "type": "Microsoft.Insights/diagnosticSettings",
+          "apiVersion": "2017-05-01-preview",
+          "name": "[parameters('settingName')]",
+          "location": "global",
+          "properties": {
+           "workspaceId": "[parameters('workspaceId')]",
+           "logs": [
+            {
+             "category": "Administrative",
+             "enabled": true
+            },
+            {
+             "category": "Security",
+             "enabled": true
+            },
+            {
+             "category": "ServiceHealth",
+             "enabled": true
+            },
+            {
+             "category": "Alert",
+             "enabled": true
+            },
+            {
+             "category": "Recommendation",
+             "enabled": true
+            },
+            {
+             "category": "Policy",
+             "enabled": true
+            },
+            {
+             "category": "Autoscale",
+             "enabled": true
+            },
+            {
+             "category": "ResourceHealth",
+             "enabled": true
+            }
+           ]
+          }
+         }
+        ]
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/a8540d17-6c4e-41da-841c-206321705e1e/providers/Microsoft.Authorization/policyDefinitions/c6038c92-4421-47f7-b287-e541c6044e8f",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "c6038c92-4421-47f7-b287-e541c6044e8f"
+}

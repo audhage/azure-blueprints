@@ -1,0 +1,123 @@
+{
+ "properties": {
+  "displayName": "Deploy NetworkWatcherAgentWindows extension for Windows Server",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "This policy deploys a NetworkWatcherAgentWindows extension when a VM is not configured with the NetworkWatcherAgentWindows extension.",
+  "metadata": {
+   "category": "Compute",
+   "createdBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "createdOn": "2020-03-24T12:17:57.5279912Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Compute/virtualMachines"
+     },
+     {
+      "field": "Microsoft.Compute/imagePublisher",
+      "equals": "MicrosoftWindowsServer"
+     },
+     {
+      "field": "Microsoft.Compute/imageOffer",
+      "equals": "WindowsServer"
+     },
+     {
+      "field": "Microsoft.Compute/imageSKU",
+      "in": [
+       "2008-R2-SP1",
+       "2008-R2-SP1-smalldisk",
+       "2012-Datacenter",
+       "2012-Datacenter-smalldisk",
+       "2012-R2-Datacenter",
+       "2012-R2-Datacenter-smalldisk",
+       "2016-Datacenter",
+       "2016-Datacenter-Server-Core",
+       "2016-Datacenter-Server-Core-smalldisk",
+       "2016-Datacenter-smalldisk",
+       "2016-Datacenter-with-Containers",
+       "2016-Datacenter-with-RDSH",
+       "2019-Datacenter",
+       "2019-Datacenter-Core",
+       "2019-Datacenter-Core-smalldisk",
+       "2019-Datacenter-Core-with-Containers",
+       "2019-Datacenter-Core-with-Containers-smalldisk",
+       "2019-Datacenter-smalldisk",
+       "2019-Datacenter-with-Containers",
+       "2019-Datacenter-with-Containers-smalldisk"
+      ]
+     }
+    ]
+   },
+   "then": {
+    "effect": "deployIfNotExists",
+    "details": {
+     "type": "Microsoft.Compute/virtualMachines/extensions",
+     "existenceCondition": {
+      "allOf": [
+       {
+        "field": "Microsoft.Compute/virtualMachines/extensions/type",
+        "equals": "NetworkWatcherAgentWindows"
+       },
+       {
+        "field": "Microsoft.Compute/virtualMachines/extensions/publisher",
+        "equals": "Microsoft.Azure.NetworkWatcher"
+       }
+      ]
+     },
+     "roleDefinitionIds": [
+      "/providers/microsoft.authorization/roleDefinitions/9980e02c-c2be-4d73-94e8-173b1dc7cf3c"
+     ],
+     "deployment": {
+      "properties": {
+       "mode": "incremental",
+       "template": {
+        "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+        "contentVersion": "1.0.0.0",
+        "parameters": {
+         "vmName": {
+          "type": "string"
+         },
+         "location": {
+          "type": "string"
+         }
+        },
+        "resources": [
+         {
+          "name": "[concat(parameters('vmName'),'/NetworkWatcherAgentWindows')]",
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "location": "[parameters('location')]",
+          "apiVersion": "2017-12-01",
+          "properties": {
+           "publisher": "Microsoft.Azure.NetworkWatcher",
+           "type": "NetworkWatcherAgentWindows",
+           "typeHandlerVersion": "1.4",
+           "autoUpgradeMinorVersion": true,
+           "settings": {}
+          }
+         }
+        ]
+       },
+       "parameters": {
+        "vmName": {
+         "value": "[field('name')]"
+        },
+        "location": {
+         "value": "[field('location')]"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/48d6938b-833e-40c4-875b-74df2d1086a1/providers/Microsoft.Authorization/policyDefinitions/5184fa48-3efc-4fdc-9d60-1e2fc4d66643",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "5184fa48-3efc-4fdc-9d60-1e2fc4d66643"
+}

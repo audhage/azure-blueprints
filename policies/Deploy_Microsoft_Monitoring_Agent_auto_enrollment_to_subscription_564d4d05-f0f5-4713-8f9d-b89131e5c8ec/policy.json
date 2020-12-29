@@ -1,0 +1,65 @@
+{
+ "properties": {
+  "displayName": "Deploy Microsoft Monitoring Agent auto enrollment to subscription",
+  "policyType": "Custom",
+  "mode": "Indexed",
+  "metadata": {
+   "category": "Monitoring",
+   "createdBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "createdOn": "2019-11-22T10:05:31.001618Z",
+   "updatedBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "updatedOn": "2019-11-22T12:30:10.8821065Z"
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "microsoft.resources/subscriptions"
+     }
+    ]
+   },
+   "then": {
+    "effect": "deployIfNotExists",
+    "details": {
+     "type": "Microsoft.Security/autoProvisioningSettings",
+     "roleDefinitionIds": [
+      "/providers/microsoft.authorization/roleDefinitions/92aaf0da-9dab-42b6-94a3-d43ce8d16293"
+     ],
+     "existenceCondition": {
+      "allOf": [
+       {
+        "field": "Microsoft.Security/AutoProvisioningSettings/autoProvision",
+        "equals": "Off"
+       }
+      ]
+     },
+     "deployment": {
+      "properties": {
+       "mode": "incremental",
+       "template": {
+        "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+        "contentVersion": "1.0.0.0",
+        "parameters": {},
+        "resources": [
+         {
+          "type": "Microsoft.Security/autoProvisioningSettings",
+          "name": "default",
+          "apiVersion": "2017-08-01-preview",
+          "properties": {
+           "autoProvision": "On"
+          }
+         }
+        ]
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/48d6938b-833e-40c4-875b-74df2d1086a1/providers/Microsoft.Authorization/policyDefinitions/564d4d05-f0f5-4713-8f9d-b89131e5c8ec",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "564d4d05-f0f5-4713-8f9d-b89131e5c8ec"
+}

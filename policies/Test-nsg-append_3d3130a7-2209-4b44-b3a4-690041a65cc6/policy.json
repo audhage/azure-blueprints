@@ -1,0 +1,145 @@
+{
+ "properties": {
+  "displayName": "Test-nsg-append",
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+   "category": "Network",
+   "createdBy": "8a09af25-078d-4b09-ba2d-e59fe5588ee3",
+   "createdOn": "2020-08-28T12:55:19.9751651Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "excludeNsgNames": {
+    "type": "Array",
+    "metadata": {},
+    "defaultValue": []
+   },
+   "name": {
+    "type": "String",
+    "metadata": {}
+   },
+   "access": {
+    "type": "String",
+    "metadata": {},
+    "allowedValues": [
+     "Allow",
+     "Deny"
+    ]
+   },
+   "priority": {
+    "type": "Integer",
+    "metadata": {}
+   },
+   "direction": {
+    "type": "String",
+    "metadata": {},
+    "allowedValues": [
+     "Inbound",
+     "Outbound"
+    ]
+   },
+   "description": {
+    "type": "String",
+    "metadata": {},
+    "defaultValue": ""
+   },
+   "protocol": {
+    "type": "String",
+    "metadata": {},
+    "allowedValues": [
+     "Tcp",
+     "Udp",
+     "Icmp",
+     "Esp",
+     "*",
+     "Ah"
+    ]
+   },
+   "sourcePortRange": {
+    "type": "String",
+    "metadata": {},
+    "defaultValue": ""
+   },
+   "sourcePortRanges": {
+    "type": "Array",
+    "metadata": {},
+    "defaultValue": []
+   },
+   "destinationPortRange": {
+    "type": "String",
+    "metadata": {},
+    "defaultValue": ""
+   },
+   "destinationPortRanges": {
+    "type": "Array",
+    "metadata": {},
+    "defaultValue": []
+   },
+   "sourceaddressPrefix": {
+    "type": "String",
+    "metadata": {},
+    "defaultValue": ""
+   },
+   "sourceaddressPrefixes": {
+    "type": "Array",
+    "metadata": {},
+    "defaultValue": []
+   },
+   "destinationaddressPrefix": {
+    "type": "String",
+    "metadata": {},
+    "defaultValue": ""
+   },
+   "destinationaddressPrefixes": {
+    "type": "Array",
+    "metadata": {},
+    "defaultValue": []
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Network/networkSecurityGroups"
+     },
+     {
+      "field": "name",
+      "notIn": "[parameters('excludeNsgNames')]"
+     }
+    ]
+   },
+   "then": {
+    "effect": "append",
+    "details": [
+     {
+      "field": "Microsoft.Network/networkSecurityGroups/securityRules[*]",
+      "value": {
+       "name": "[parameters('name')]",
+       "properties": {
+        "access": "[parameters('access')]",
+        "priority": "[parameters('priority')]",
+        "direction": "[parameters('direction')]",
+        "description": "[parameters('description')]",
+        "protocol": "[parameters('protocol')]",
+        "sourcePortRange": "[if(not(empty(parameters('sourcePortRange'))), parameters('sourcePortRange'), json('null'))]",
+        "sourcePortRanges": "[if(not(empty(parameters('sourcePortRanges'))), parameters('sourcePortRanges'), json('null'))]",
+        "destinationPortRange": "[if(not(empty(parameters('destinationPortRange'))), parameters('destinationPortRange'), json('null'))]",
+        "destinationPortRanges": "[if(not(empty(parameters('destinationPortRanges'))), parameters('destinationPortRanges'), json('null'))]",
+        "sourceaddressPrefix": "[if(not(empty(parameters('sourceaddressPrefix'))), parameters('sourceaddressPrefix'), json('null'))]",
+        "sourceaddressPrefixes": "[if(not(empty(parameters('sourceaddressPrefixes'))), parameters('sourceaddressPrefixes'), json('null'))]",
+        "destinationaddressPrefix": "[if(not(empty(parameters('destinationaddressPrefix'))), parameters('destinationaddressPrefix'), json('null'))]",
+        "destinationaddressPrefixes": "[if(not(empty(parameters('destinationaddressPrefixes'))), parameters('destinationaddressPrefixes'), json('null'))]"
+       }
+      }
+     }
+    ]
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/48d6938b-833e-40c4-875b-74df2d1086a1/providers/Microsoft.Authorization/policyDefinitions/3d3130a7-2209-4b44-b3a4-690041a65cc6",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "3d3130a7-2209-4b44-b3a4-690041a65cc6"
+}
